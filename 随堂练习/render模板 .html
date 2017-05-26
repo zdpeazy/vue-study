@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="vue.js"></script>
+		<style>
+		 	.bg{
+		 		background: red;
+		 	}
+			.red{
+				color: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 模板 view-->
+		<div  class="demo">
+		</div>
+		<script>
+			/*数据层 model*/
+			var data = {
+				html: '<div>hello,html!</div>',
+				message: 'hello,vue',
+				id: '1',
+			}
+			/*viewmodel 声明式渲染*/
+			var vm = new Vue({
+				el: '.demo',
+				data: data,
+				methods: {
+					clickHand(){
+						alert('click');
+					},
+				},
+				render(createElement){
+					return createElement(
+						'ul',
+						{
+							class: {
+								bg: true,
+							},
+							
+						},
+						[
+							createElement(
+								'li',
+								{
+									class: {//class，龚总
+										red: true,
+									},
+									style: {//样式
+										fontSize: '50px',
+									},
+									attrs: {//自定义属性
+										'data-id': '1',
+									},
+									domProps: {
+										innerHTML: '<li>我是最新替换的</li>'//无效
+									},
+
+								},
+								[
+									createElement('a',1),
+									createElement('a',5),
+								]
+							),
+							createElement('li',2),
+							createElement('li',3),
+						]
+					);
+				}
+			})
+		</script>
+	</body>
+</html>

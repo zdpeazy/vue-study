@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="vue.js"></script>
+	</head>
+	<body>
+		<!-- 模板 view-->
+		<div class="demo">
+			<!-- <p v-bind:customid="id" v-on:click="clickHand">{{message}}</p> -->
+			 <p :customid="id" @click="clickHand">{{message}}</p>
+		</div>
+		<script>
+			/*数据层 model*/
+			var data = {
+				message: "hello,vue",
+				id: "1",
+			}
+			/*viewmodel 声明式渲染*/
+			var vm = new Vue({
+				el: '.demo',
+				data: data,
+				methods: {
+					clickHand(){
+						alert('click');
+					},
+				}
+			})
+		</script>
+	</body>
+</html>

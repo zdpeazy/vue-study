@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="vue.js"></script>
+		<style>
+		 	.bg{
+		 		background: red;
+		 	}
+			.red{
+				color: yellow;
+			}
+			.fontSize{
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 模板 view-->
+		<div :class={bg:addClass} class="demo" @click="clickHand" v-html="html">
+			{{message}}
+			<p :customid="id">321321321</p>
+		</div>
+		<script>
+			/*数据层 model*/
+			var data = {
+				addClass: true,
+				message: 'hello vue',
+				id: '1',
+				html: '<span>41342131</span>'
+			}
+			/*viewmodel 声明式渲染*/
+			var vm = new Vue({
+				el: '.demo',
+				data: data,
+				methods: {
+					clickHand(){
+						alert('1111');
+					}
+				},
+				render(createElement){
+					return createElement(
+						'ul',
+						{
+							class: {
+								bg:true,
+							}
+						},
+						[
+							createElement(
+								'li',
+								{
+									class: {
+										red: true,
+										fontSize: true,
+									},
+									style: {
+										background: '#000',
+										color: '#fff',
+									},
+									attrs: {
+										'data-id': '1',
+									}
+
+								},
+								'4'
+							),
+							createElement('li','2'),
+							createElement('li','3'),
+						]
+					)
+				}
+
+			});
+			
+		</script>
+	</body>
+</html>

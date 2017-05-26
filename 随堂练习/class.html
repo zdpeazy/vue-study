@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			.red{
+				color:red;
+			}
+			.fontSize{
+				font-size: 50px;
+			}
+		</style>
+		<script src="vue.js"></script>
+	</head>
+	<body>
+		<!-- 模板 view-->
+		<div class="demo" >
+			<span class="fontSize" v-bind:	="{red:addClass}" @click="clickHand">hello,vue</span>
+		</div>
+		<script>
+			/*数据层 model*/
+			var data = {
+				addClass: false,
+			}
+			/*viewmodel 声明式渲染*/
+			var vm = new Vue({
+				el: '.demo',
+				data: data,
+				methods: {
+					clickHand(){
+						alert('click');
+					},
+				}
+			})
+		</script>
+	</body>
+</html>

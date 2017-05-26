@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="vue.js"></script>
+	</head>
+	<body>
+		<!-- 模板 view-->
+		<div class="demo">
+			 <p :customid="id" @click="clickHand" v-html="html">{{message}}</p>
+			 <p>{{2*8}}</p>
+			 <p>{{ true ? "hellow true" : "hello false"}}</p>
+		</div>
+		<script>
+			/*数据层 model*/
+			var data = {
+				html: '<div>hello,html!</div>',
+				message: 'hello,vue',
+				id: '1',
+			}
+			/*viewmodel 声明式渲染*/
+			var vm = new Vue({
+				el: '.demo',
+				data: data,
+				methods: {
+					clickHand(){
+						alert('click');
+					},
+				}
+			})
+		</script>
+	</body>
+</html>

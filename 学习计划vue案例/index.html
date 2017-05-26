@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue实现任务列表</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script type='text/javascript' src='js/vue.js'></script>
+</head>
+<body>
+    <div id="app">
+        <div class="task-nav">
+            任务计划列表
+        </div>
+        <div class="task-add">
+            <h2>添加任务：</h2>
+            <input
+                    type="text"
+                    placeholder="例如：吃饭睡觉打豆豆；  提示：+回车即可添加任务"
+                    v-model="title"
+                    v-on:keyup.enter="addTask"
+            >
+            <div class="task-state clearfix">
+                <div class="task-state-left">{{unFinishedTask}}个任务未完成</div>
+                <ul class="task-state-right">
+                    <li
+                            v-on:click="changePage('all')"
+                            v-bind:class="{ selected: page=='all' }"
+                    >所有任务</li>
+                    <li
+                            v-on:click="changePage('unfinished')"
+                            v-bind:class="{ selected: page=='unfinished' }"
+                    >未完成的任务</li>
+                    <li
+                            v-on:click="changePage('finished')"
+                            v-bind:class="{ selected: page=='finished' }"
+                    >完成的任务</li>
+                </ul>
+            </div>
+        </div>
+        <div
+                class="task-list"
+        >
+            <h3>任务列表：</h3>
+            <p
+                    class="task-list-none"
+                    v-show="!tasks.length"
+            >还没添加任何任务</p>
+            <ul
+                    class="task-list-have"
+                    v-show="!!tasks.length"
+            >
+                <li
+                        v-for="task in tasks"
+                        class="clearfix"
+                        v-show="page=='all' || (page=='unfinished' && !task.state) || (page=='finished' && task.state)"
+                >
+                    <input
+                            type="checkbox"
+                            v-model="task.state"
+                            v-on:click="checkUnfinishedTask"
+                    >
+                    <input
+                            type="text"
+                            v-model="task.title"
+                            v-on:dblclick="editTask(task)"
+                            v-on:blur="finishEditTask(task)"
+                            v-on:keyup.enter="finishEditTask(task)"
+                            v-on:keyup.esc="loseEditTask(task)"
+                            v-bind:readonly="!task.edit"
+                            v-bind:class="{ selected: task.state }"
+                    >
+                    <div
+                            class="del-button"
+                            v-on:click="delTask(task)"
+                    ></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var data = {
+            title: '',
+            tasks: [],
+            unFinishedTask: 0,
+            page: 'all'
+        }
+
+        var app = new Vue({
+            el: '#app',
+            data: data,
+            methods: {
+                addTask: function () {
+                    var task = {};
+                    task.title = this.title;
+                    task.extitle = task.title;
+                    task.state = false;
+                    task.edit = false;
+                    this.tasks.push(task);
+                    this.unFinishedTask += 1;
+                    this.title = undefined;
+                },
+                delTask: function (task) {
+                    if(!task.state) {
+                        this.unFinishedTask -= 1;
+                    }
+                    var index = this.tasks.indexOf(task);
+                    this.tasks.splice(index,1);
+                },
+                editTask: function (task) {
+                    task.edit = true;
+                },
+                finishEditTask:function (task) {
+                    task.extitle = task.title;
+                    task.edit = false;
+                },
+                loseEditTask: function (task) {
+                    task.title = task.extitle;
+                    task.edit = false;
+                },
+                checkUnfinishedTask: function () {
+                    unfinishedTaskArray = [];
+                    this.tasks.forEach(
+                            function (item, index) {
+                                if(!item.state) {
+                                    unfinishedTaskArray.push(item);
+                                }
+                            }
+                    );
+                    this.unFinishedTask = unfinishedTaskArray.length;
+                },
+                changePage: function (type) {
+                    this.page = type;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
