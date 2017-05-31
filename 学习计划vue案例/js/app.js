@@ -1,19 +1,45 @@
-var list = [
-	/*{
+//存取localStorage中的数据
+var store = {
+	save(key, value){
+		localStorage.setItem(key,JSON.stringify(value));
+	},
+	fetch(key){
+		return JSON.parse(localStorage.getItem(key)) || [];
+	}
+}
+
+
+
+/*var list = [
+	{
 		title: '吃饭打豆豆',
 		isChecked: false,
 	},
 	{
 		title: '睡觉打豆豆',
 		isChecked: true,
-	},*/
-];
+	},
+];*/
 
+var list = store.fetch('vueKey');
 new Vue({
 	el: '.main',
 	data: {
 		list: list,
 		todo: '',
+	},
+	watch: {
+		//浅监控
+		/*list: function(){//监控list数据，当这个属性对应的值发生变化时候就会执行函数
+			store.save('vueKey', this.list);
+		}*/
+		//深度监控
+		list: {
+			handler: function(){
+				store.save('vueKey', this.list);
+			},
+			deep: true
+		}
 	},
 	computed: {
 		noCheckedLength(){
