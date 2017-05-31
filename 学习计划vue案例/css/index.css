@@ -108,8 +108,8 @@ html, body {
 .task-list .task-list-have li input[type="checkbox"] {
     float: left;
     width: 8%;
-    height: 20px;
-    margin: 0;
+    height: 12px;
+    margin: 4px auto;
     padding: 0;
     zoom: 200%;
 }
@@ -117,11 +117,16 @@ html, body {
     float: left;
     width: 80%;
     height: 40px;
+    line-height: 40px;
     margin: 0;
     padding: 0;
     border: none;
-    font-size: 20px;
-
+    font-size: 16px;
+    color: #666;
+}
+.task-list .task-list-have li.view input[type="text"]{
+    text-decoration: line-through;
+    color: #999;
 }
 .task-list .task-list-have li .selected {
     text-decoration: line-through;

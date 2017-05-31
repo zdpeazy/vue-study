@@ -16,9 +16,7 @@
 	</head>
 	<body>
 		<!-- 模板 view-->
-		<div :class={bg:addClass} class="demo" @click="clickHand" v-html="html">
-			{{message}}
-			<p :customid="id">321321321</p>
+		<div class="demo" @click="clickHand">
 		</div>
 		<script>
 			/*数据层 model*/
@@ -34,7 +32,7 @@
 				data: data,
 				methods: {
 					clickHand(){
-						alert('1111');
+						alert('click');
 					}
 				},
 				render(createElement){
@@ -42,7 +40,7 @@
 						'ul',
 						{
 							class: {
-								bg:true,
+								bg: true,
 							}
 						},
 						[
@@ -51,26 +49,23 @@
 								{
 									class: {
 										red: true,
-										fontSize: true,
 									},
 									style: {
-										background: '#000',
-										color: '#fff',
+										'font-size': '30px',
 									},
 									attrs: {
 										'data-id': '1',
-									}
-
+									},
 								},
-								'4'
+								'1'
+							
 							),
 							createElement('li','2'),
 							createElement('li','3'),
 						]
 					)
 				}
-
-			});
+			})
 			
 		</script>
 	</body>
