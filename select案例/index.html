@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="./vue.js"></script>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <div id="app">
+      <h2>自定义的下拉框1</h2>
+      <custom-select btn-value="查询"></custom-select>
+      <h2>自定义的下拉框2</h2>
+      <custom-select btn-value="搜索"></custom-select>
+    </div>
+    <script>
+    //父组件
+    Vue.component('custom-select',{
+      data: function(){
+        return {
+          selectShow: false,
+        };
+      },
+      props: ['btnValue'],
+      template:
+      `<section class="warp">
+         <div class="searchIpt clearFix">
+            <div class="clearFix">
+              <input type="text" class="keyword" @click="selectShow = !selectShow"/>
+              <input type="button" class="button" :value="btnValue">
+              <span></span>
+            </div>
+            <custom-list v-show="selectShow"></custom-list>
+          </div>
+      </section>`
+    })
+    //子组件
+    Vue.component('custom-list',{
+      template: 
+      `<ul class="list">
+          <li>上海</li>
+          <li>北京</li>
+          <li>杭州</li>
+          <li>深圳</li>
+          <li>保定</li>
+        </ul>`
+    })
+    new Vue({
+      el: '#app',
+    })
+    </script>
+  </body>
+</html>
