@@ -55,7 +55,7 @@ html, body {
     list-style: none;
     line-height: 30px;
 }
-.task-add .task-state .task-state-right li {
+.task-add .task-state .task-state-right li{
     display: inline-block;
     width: 30%;
     height: 30px;
@@ -63,13 +63,24 @@ html, body {
     text-align: center;
     cursor: pointer;
 }
+.task-add .task-state .task-state-right li a{
+    display: block;
+    text-decoration: none;
+    color: #999;
+}
 .task-add .task-state .task-state-right li:hover {
-    border: 1px solid #999;
+    border: 1px solid #333;
     line-height: 28px;
+}
+.task-add .task-state .task-state-right li:hover a{
+    color: #333;
 }
 .task-add .task-state .task-state-right li.selected {
     border: 1px solid #999;
     line-height: 28px;
+}
+.task-add .task-state .task-state-right li.selected a{
+    color: #333;
 }
 .task-list {
     width: 50%;

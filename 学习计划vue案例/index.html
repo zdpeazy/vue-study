@@ -22,9 +22,9 @@
                 个任务未完成
                 </div>
                 <ul class="task-state-right">
-                    <li>所有任务</li>
-                    <li>未完成的任务</li>
-                    <li>完成的任务</li>
+                    <li :class="{selected: visibility!=='unfinished' && visibility!=='finished'}"><a href="#all">所有任务</a></li>
+                    <li :class="{selected: visibility=='unfinished'}"><a href="#unfinished">未完成的任务</a></li>
+                    <li :class="{selected: visibility=='finished'}"><a href="#finished">完成的任务</a></li>
                 </ul>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <h3>任务列表：</h3>
             <p  class="task-list-none" v-show="!list.length">还没添加任何任务</p>
             <ul class="task-list-have todo">
-                <li v-for="item in list" :class="{view: item.isChecked}">
+                <li v-for="item in filteredList" :class="{view: item.isChecked}">
                     <input type="checkbox" v-model="item.isChecked">
                     <input type="text" @dblclick="editorTodo(item)" v-model="item.title" :readonly="!item.edit" @keyup.13="finishEdit(item)" @blur="finishEdit(item)" @keyup.esc="cancelEdit(item)" />
                     <div class="del-button" @click="deleteTodo(item,$event)">删除</div>

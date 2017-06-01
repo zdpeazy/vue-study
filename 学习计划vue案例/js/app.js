@@ -8,25 +8,31 @@ var store = {
 	}
 }
 
-
-
-/*var list = [
-	{
-		title: '吃饭打豆豆',
-		isChecked: false,
-	},
-	{
-		title: '睡觉打豆豆',
-		isChecked: true,
-	},
-];*/
-
 var list = store.fetch('vueKey');
-new Vue({
+
+//过滤有三种情况 all unfinished finished
+var filter = {
+	all: function(list){
+		return list;
+	},
+	finished: function(list){
+		return list.filter(function(item){
+            return item.isChecked;
+        })
+	},
+	unfinished: function(list){
+		return list.filter(function(item){
+            return !item.isChecked;
+        })
+	}
+}
+
+var vm = new Vue({
 	el: '.main',
 	data: {
 		list: list,
 		todo: '',
+		visibility: 'all',//通过这个属性值变化筛选数据
 	},
 	watch: {
 		//浅监控
@@ -44,9 +50,15 @@ new Vue({
 	computed: {
 		noCheckedLength(){
 			return this.list.filter(function(item){
-                return !item.isChecked
+                return !item.isChecked;
             }).length;
 		},
+		filteredList: function(){
+			//找到了过滤函数如果有则为函数返回值如果没有则是list
+			store.save('vueKey', this.list);//过滤时重新获取一遍localStorage
+			return filter[this.visibility] ? filter[this.visibility](list) : list;
+
+		}
 	},
 	methods: {
 		addTodo(data,ev){//添加任务
@@ -94,3 +106,10 @@ new Vue({
 		}
 	}
 })
+
+function watchHashChange(){
+	var hash = window.location.hash.slice(1);
+	vm.visibility = hash;
+}
+watchHashChange();
+window.addEventListener('hashchange', watchHashChange);
